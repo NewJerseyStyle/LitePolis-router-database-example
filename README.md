@@ -1,33 +1,54 @@
-# LitePolis-router-database Template
+# LitePolis Router Database Example
 
-This repository serves as a template for creating database modules for LitePolis.  It provides a basic structure and example code to guide you through the process.
+This repository provides a working example of a database module for LitePolis, using SQLite as the database. It demonstrates how to create, read, update, and delete data using FastAPI and SQLModel.  You can use this example as a starting point to build your own custom database modules for LitePolis.
 
 ## Getting Started
 
-1. **Clone the Repository:** Start by cloning this repository to your local machine.
+Follow these steps to understand and adapt this example for your own LitePolis database module:
 
-2. **Rename the Package:**  Update the package name in the following files:
-    * **`setup.py`**: Change `name='litepolis-router-database'` to your desired package name (e.g., `litepolis-router-mydatabase`).  Also, update the `version`, `description`, `author`, and `url` fields accordingly.
-    * **`tests/test_core.py`**: Update the import statement to reflect your new package name. For example, change `from litepolis_router_database import *` to `from litepolis_router_mydatabase import *`.
-    * Rename the folder `litepolis_router_database` to your new package name.
+1. **Clone the Repository:** Clone this repository to your local machine.
 
-3. **Implement Database Logic:** Modify the `litepolis_router_database/core.py` file (renamed in the previous step) to interact with your specific database.  The provided example code includes a basic structure with example endpoints.  Replace these with your database operations.  Ensure you update the docstrings to accurately reflect the functionality of your endpoints.  These docstrings will be used to generate API documentation.
+2. **Install Dependencies:** Install the required Python packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. **Testing:** The `tests/test_core.py` file contains example tests.  Update these tests to cover your database module's functionality.  Ensure the tests run successfully after making changes.
+3. **Examine `setup.py`:** This file contains metadata about the example package.  When creating your own module, you'll need to change the following:
+    * `name`: Change to your package's unique name (e.g., `litepolis-router-mydatabase`).
+    * `version`, `description`, `author`, `url`: Update these fields accordingly.
+    * `install_requires`: Add any additional dependencies your module requires.
 
-## Key Files and Modifications
+4. **Understand the Core Logic (`litepolis_router_database_sqlite/core.py`):** This file sets up the FastAPI router and includes the routers for different data models (Users, Conversations, Comments).  When building your own module, you'll likely add more routers here for your specific data models.  The `prefix` variable is used to define the API endpoint prefix.
 
-* **`setup.py`**:  This file contains metadata about your package.  **Crucially**, you need to change the `name` field to your package's unique name.  Also, update the `version`, `description`, `author`, and `url` fields as needed.
+5. **Explore Data Models (`litepolis_router_database_sqlite/Users.py`, `Conversations.py`, `Comments.py`):** These files define the data models using SQLModel and implement the CRUD operations for each model.  Study these files to understand how to:
+    * Define SQLModel classes for your tables.
+    * Create FastAPI endpoints for each CRUD operation.
+    * Use the `get_session` dependency for database interaction.
+    * Handle errors and return appropriate responses.
 
-* **`litepolis_router_database/core.py`**: This file contains the core logic for your database module.  You'll implement your database interactions here.  The template provides example endpoints (`/` and `/user`).  Replace these with your own endpoints and database operations.  **Important:** Update the docstrings for API documentation generation.  Pay attention to the `ResponseMessage` model and adapt it if necessary to fit your data structures.
+6. **Adapt and Extend:**  Rename the entire `litepolis_router_database_sqlite` folder to your desired package name (e.g., `litepolis_router_mydatabase`).  Then, modify the files within this folder to implement your own database logic.  You'll need to:
+    * Create new SQLModel classes for your tables.
+    * Create corresponding FastAPI endpoints in separate files (like `Users.py`).
+    * Include your new routers in the `core.py` file of your new package.
+    * Update the tests in the `tests` folder to cover your new functionality.
 
-* **`tests/test_core.py`**: This file contains tests for your database module.  Update the tests to reflect your changes in `core.py`.  Thorough testing is essential for ensuring the correctness of your module.
+7. **Testing (`tests` folder):**  The `tests` folder contains example tests using `pytest`.  Examine `test_Users.py`, `test_Conversations.py`, and `test_Comments.py` to understand how to write tests for your database module.  When adapting this example, update these tests to reflect your changes and add new tests for your own data models and endpoints.  Run the tests using:
+   ```bash
+   pytest
+   ```
 
-## Important Considerations
+8. Release your package to PyPI so that LitePolis package manager can automatically fetch the package during deployment.
 
-* **API Documentation:**  Well-documented code is crucial for maintainability and collaboration.  Ensure your endpoints in `core.py` have clear and comprehensive docstrings. These docstrings will be used to generate API documentation for LitePolis. For best practices and detailed examples, refer to this helpful resource: [How to Document an API for Python FastAPI](https://medium.com/codex/how-to-document-an-api-for-python-fastapi-best-practices-for-maintainable-and-readable-code-a183a3f7f036)
+9. Documentation the pre-requirements for deployment (e.g. Setup MySQL with `docker run -d MySQL` and setup access as "root" and "password" first before deploy the LitePolis system)
 
-* **Testing:**  Write comprehensive tests to cover all aspects of your database module.  This will help catch errors early and ensure the stability of your code.
+## Key Concepts and Hints
 
-* **Dependencies:**  If your database module requires external libraries, add them to the `install_requires` list in `setup.py`.
+* **SQLModel:**  This library simplifies database interactions by mapping Python classes to database tables.  Learn more about SQLModel here: [https://sqlmodel.tiangolo.com/](https://sqlmodel.tiangolo.com/)
+
+* **FastAPI:**  FastAPI is used to create the API endpoints.  Refer to the FastAPI documentation for details: [https://fastapi.tiangolo.com/](https://fastapi.tiangolo.com/)
+
+* **Dependency Injection:**  The `get_session` dependency ensures that each endpoint has access to a database session.
+
+* **Testing with Pytest:**  Pytest is used for writing and running tests.  See the pytest documentation for more information: [https://docs.pytest.org/en/7.1.x/](https://docs.pytest.org/en/7.1.x/)
+
 

@@ -14,6 +14,7 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     author='Your name',
+    # author_email='Optional',                            # Change
     url='https://github.com/NewJerseyStyle/LitePolis-router-database-example',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),

@@ -8,15 +8,14 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='litepolis-router-database',                     # Change
-    version="v0.0.1",                                     # Change
-    description='The database module for LitePolis',      # Change
+    name='litepolis-router-database-sqlite',
+    version="v0.0.1",
+    description='The sqlite database module for LitePolis',
     long_description=readme,
     long_description_content_type="text/markdown",
-    author='Your name',                                   # Change
-    # author_email='Optional',                            # Change
-    url='https://github.com/change-to-your-repo',         # Change
+    author='Your name',
+    url='https://github.com/NewJerseyStyle/LitePolis-router-database-example',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
-    install_requires=['fastapi'],
+    install_requires=['fastapi', 'sqlmodel'],
 )

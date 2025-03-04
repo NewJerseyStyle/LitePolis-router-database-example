@@ -3,6 +3,7 @@ from litepolis_router_database_sqlite import *
 from fastapi import FastAPI
 
 app = FastAPI()
+router = init()
 app.include_router(router, prefix=f"/api/{prefix}")
 client_users = TestClient(app)
 

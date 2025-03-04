@@ -1,8 +1,15 @@
+import configparser
 from fastapi.testclient import TestClient
 from litepolis_router_database_sqlite import *
 from fastapi import FastAPI
 
 app = FastAPI()
+config = configparser.ConfigParser()
+package_name = "litepolis_router_database_sqlite"
+config.add_section(package_name)
+for k, v in DEFAULT_CONFIG.items():
+    config.set(package_name, k, v)
+router = init(config)
 app.include_router(router, prefix=f"/api/{prefix}")
 client_comments = TestClient(app)
 client_comments_prefix = f"/api/{prefix}/comments"

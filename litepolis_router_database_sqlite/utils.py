@@ -1,9 +1,13 @@
 from sqlmodel import Session, SQLModel, create_engine
 
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
+DEFAULT_CONFIG = {
+    "sqlite_url": "sqlite:///database.db"
+}
 
-engine = create_engine(sqlite_url)
+engine = create_engine(DEFAULT_CONFIG["sqlite_url"])
+
+def connect_db():
+    engine = create_engine(DEFAULT_CONFIG["sqlite_url"])
 
 def create_db_and_tables():
     # SQLModel.metadata.create_all() has checkfirst=True by default

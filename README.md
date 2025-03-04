@@ -18,7 +18,7 @@ Follow these steps to understand and adapt this example for your own LitePolis d
     * `version`, `description`, `author`, `url`: Update these fields accordingly.
     * `install_requires`: Add any additional dependencies your module requires.
 
-4. **Understand the Core Logic (`litepolis_router_database_sqlite/core.py`):** This file sets up the FastAPI router and includes the routers for different data models (Users, Conversations, Comments).  When building your own module, you'll likely add more routers here for your specific data models.  The `prefix` variable is used to define the API endpoint prefix.
+4. **Understand the Core Logic (`litepolis_router_database_sqlite/core.py`):** This file sets up the FastAPI router and includes the routers for different data models (Users, Conversations, Comments).  The `init` function initializes the router, optionally taking a configuration object. The `DEFAULT_CONFIG` dictionary provides default configuration settings. When building your own module, you'll likely add more routers here for your specific data models.  The `prefix` variable is used to define the API endpoint prefix.
 
 5. **Explore Data Models (`litepolis_router_database_sqlite/Users.py`, `Conversations.py`, `Comments.py`):** These files define the data models using SQLModel and implement the CRUD operations for each model.  Study these files to understand how to:
     * Define SQLModel classes for your tables.
@@ -30,7 +30,7 @@ Follow these steps to understand and adapt this example for your own LitePolis d
     * Create new SQLModel classes for your tables.
     * Create corresponding FastAPI endpoints in separate files (like `Users.py`).
     * Include your new routers in the `core.py` file of your new package.
-    * Update the tests in the `tests` folder to cover your new functionality.
+    * Update the tests in the `tests` folder to cover your new functionality.  Note that the `DEFAULT_CONFIG` and `init` function are crucial for the package manager to correctly initialize and start the services.
 
 7. **Testing (`tests` folder):**  The `tests` folder contains example tests using `pytest`.  Examine `test_Users.py`, `test_Conversations.py`, and `test_Comments.py` to understand how to write tests for your database module.  When adapting this example, update these tests to reflect your changes and add new tests for your own data models and endpoints.  Run the tests using:
    ```bash
@@ -39,7 +39,7 @@ Follow these steps to understand and adapt this example for your own LitePolis d
 
 8. Release your package to PyPI so that LitePolis package manager can automatically fetch the package during deployment.
 
-9. Documentation the pre-requirements for deployment (e.g. Setup MySQL with `docker run -d MySQL` and setup access as "root" and "password" first before deploy the LitePolis system)
+9. Document the pre-requirements for deployment (e.g., Setup MySQL with `docker run -d MySQL` and edit the config first before serving the LitePolis system)
 
 ## Key Concepts and Hints
 
@@ -50,5 +50,3 @@ Follow these steps to understand and adapt this example for your own LitePolis d
 * **Dependency Injection:**  The `get_session` dependency ensures that each endpoint has access to a database session.
 
 * **Testing with Pytest:**  Pytest is used for writing and running tests.  See the pytest documentation for more information: [https://docs.pytest.org/en/7.1.x/](https://docs.pytest.org/en/7.1.x/)
-
-
